@@ -1,0 +1,24 @@
+{
+    "produtos": [
+        { "id": 1,
+            "nome": "Coca-Cola",
+            "preco": 10,
+            "quantidade": 4
+        },
+    
+   
+        { "id": 2,
+            "nome": "Ruffles",
+            "preco": 7,
+            "quantidade": 15
+        },
+    
+    
+        {
+             "id": 3,
+            "nome": "Antartica Original",
+            "preco": 8.95,
+            "quantidade": 10
+        }
+    ]
+}
