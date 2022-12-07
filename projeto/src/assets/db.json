@@ -1,24 +1,38 @@
 {
-    "produtos": [
-        { "id": 1,
-            "nome": "Coca-Cola",
-            "preco": 10,
-            "quantidade": 4
-        },
-    
-   
-        { "id": 2,
-            "nome": "Ruffles",
-            "preco": 7,
-            "quantidade": 15
-        },
-    
-    
-        {
-             "id": 3,
-            "nome": "Antartica Original",
-            "preco": 8.95,
-            "quantidade": 10
-        }
-    ]
+  "produtos": [
+    {
+      "id": 1,
+      "produtos": "Coca-Cola",
+      "preco": 10,
+      "quantidade": 4
+    },
+    {
+      "id": 2,
+      "produtos": "Ruffles",
+      "preco": 7,
+      "quantidade": 15
+    },
+    {
+      "id": 3,
+      "produtos": "Antartica Original",
+      "preco": 8.95,
+      "quantidade": 10
+    },
+    {
+      "id": 4,
+      "produtos": "Amstel Puro Malte 600ml",
+      "preco": 7.99,
+      "quantidade": 10
+    },
+    {
+      "produtos": "Corona",
+      "quantidade": "10",
+      "id": 5
+    },
+    {
+      "produtos": "Heiniken",
+      "quantidade": "10",
+      "id": 6
+    }
+  ]
 }

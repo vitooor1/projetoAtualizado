@@ -11,14 +11,13 @@
 <ion-content [fullscreen]="true">
 
   <ion-list>
-    <ion-item-sliding *ngFor="let produto of produtosVariados">
+    <ion-item-sliding *ngFor="let produtos of produtosVariados">
       <!-- esse comando serve para mover meu item para o lado, para ele deslizar.-->
-
       <ion-item>
-        <ion-label> Produto: {{produto.produto}} / Quantidade: {{produto.quantidade}}</ion-label>
+        <ion-label> Produto: {{produtos.produtos}} / Quantidade: {{produtos.quantidade}}</ion-label>
       </ion-item>
       <ion-item-options>
-        <ion-item-option color="danger">
+        <ion-item-option color="danger" (click)="deletar(produtos.id)">
           <ion-icon name="trash-outline"></ion-icon>
         </ion-item-option>
         <ion-item-option color="secondary">
