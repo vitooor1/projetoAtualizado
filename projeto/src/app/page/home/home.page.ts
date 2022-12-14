@@ -1,8 +1,11 @@
 
 import { Component, OnInit } from '@angular/core';
-import { AlertController, LoadingController } from '@ionic/angular';
+import { AlertController, LoadingController, ToastController } from '@ionic/angular';
 import { Produtos } from 'src/app/model/produto.model';
 import { BancoServiceService } from 'src/app/servico/banco-service.service';
+import { UtilityService } from 'src/app/servico/utility.service';
+import { ActionSheetController } from '@ionic/angular';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -12,35 +15,31 @@ export class HomePage implements OnInit {
 
   produtosVariados: Produtos[] = [];
   constructor(
+
     private DataBase: BancoServiceService,
 
     //loadingController - Ferramento do carregando
-    private loadCtrl: LoadingController,
+    //private loadCtrl: LoadingController,
 
     //alertController - Ferramenta que cria um alert
-    private alertCtrl: AlertController
-  ) { }
+    private alertCtrl: AlertController,
 
+    //toastController - Criar uma mensagem
+    //private toast: ToastController,
+
+    private utilidades: UtilityService,
+
+    private actionSheet: ActionSheetController
+
+
+  ) { }
 
 
   ngOnInit() {
     //Carrega o método no inicio da página
-    this.carregando();
+    this.utilidades.carregando('carregando')
     //this.http.get<Produtos[]>().subscribe(results => this.produtosVariados = results)
-    this.DataBase.getItem().subscribe(results=> this.produtosVariados = results)
-  }
-
-  // método do carregando (load)
-  async carregando() {
-
-    const load = this.loadCtrl.create({
-      mode: 'ios',
-      message: 'Carregando...',
-      duration: 2000
-    });
-
-    (await load).present();
-
+    this.DataBase.getItem().subscribe(results => this.produtosVariados = results)
   }
 
   //Método do alertando
@@ -78,13 +77,16 @@ export class HomePage implements OnInit {
             //Objeto que ira formar nosso item da lista.
             let item = {
               produtos: form.item,
-              quantidade: form.qtd
-              
+              quantidade: form.qtd,
+              //vai ser a variavel de controle do ngIf
+              status: false
+
             };
             this.DataBase.postItem(item);
-            console.log(item);
+            //console.log(item);
+            this.utilidades.toastando("Item Cadastrado", "middle", "success", 2000);
           }
-    
+
         }
       ]
     });
@@ -97,8 +99,40 @@ export class HomePage implements OnInit {
   //Método do botão excluir
   deletar(id: number) {
     this.DataBase.deleteItem(id);
-    //atualiza a página
-    location.reload();
 
+    //Chama a mensagem
+    this.utilidades.toastando("Item Excluido", "middle", "danger", 2000);
+
+
+    //atualiza a página
+
+  }
+  // método do actionsheet
+async actionMetod(item:Produtos) {
+    const action = this.actionSheet.create({
+      header: 'Selecione uma opção',
+      buttons: [
+        {
+          text: 'Marcar',
+          handler: () => {
+            this.utilidades.toastando('Marcamos', "middle", "primary", 2000);
+            console.log(item.id)
+           },
+        },
+        
+        {
+          text: 'Desmarcar',
+          handler: () => {
+            this.utilidades.toastando('Desmarcamos', "middle",  "primary", 2000);
+          },
+        },   
+        {
+          text: "Cancelar",
+          handler: () => {
+            this.utilidades.toastando('Cancelamos', "middle","primary", 2000);
+          },
+        },
+      ]    
+    }); (await action).present();
   }
 }
