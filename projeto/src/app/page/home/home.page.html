@@ -31,12 +31,16 @@
           <ion-icon name="trash-outline"></ion-icon>
         </ion-item-option>
 
-        <ion-item-option color="secondary">
+        <ion-item-option color="secondary" [routerLink]="['/form', produtos.id]">
           <ion-icon name="create-outline"></ion-icon>
         </ion-item-option>
+
       </ion-item-options>
+
     </ion-item-sliding>
+
   </ion-list>
+  
   <!--botão flutuante-->
   <ion-fab horizontal="end">
     <ion-fab-button (click)="alertando()">

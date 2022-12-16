@@ -25,6 +25,7 @@ export class UtilityService {
 
 
     (await load).present();
+    //location.reload();
   }
   async toastando(message: string, position: "top" | "middle" | "bottom", color: string, duration: number) {
     const toastando = this.toast.create({

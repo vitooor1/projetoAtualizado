@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Form } from '@angular/forms';
 import { Produtos } from '../model/produto.model';
 
 @Injectable({
@@ -19,6 +20,11 @@ export class BancoServiceService {
   getItem() {
     return this.http.get<Produtos[]>(this.API);
   }
+  //método para trazer um unico item
+  getOneItem(id: number){
+    return this.http.get<Produtos>(this.API + id);
+
+  }
   postItem(produtos: any) {
     return this.http.post(this.API, JSON.stringify(produtos), this.HttpOptions).subscribe();
   }
@@ -31,5 +37,10 @@ export class BancoServiceService {
 
   }
 
+  //metodo de alteração de status
+
+  statusItem(item: Produtos) {
+    return this.http.put(this.API + item.id, JSON.stringify(item), this.HttpOptions).subscribe;
+  }
 
 }

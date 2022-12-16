@@ -29,6 +29,12 @@
       "quantidade": "20kg",
       "status": false,
       "id": 21
+    },
+    {
+      "produtos": "Arroz",
+      "quantidade": "3kg",
+      "status": false,
+      "id": 22
     }
   ]
 }

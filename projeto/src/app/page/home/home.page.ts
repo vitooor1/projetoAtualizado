@@ -108,31 +108,26 @@ export class HomePage implements OnInit {
 
   }
   // método do actionsheet
-async actionMetod(item:Produtos) {
+  async actionMetod(item: Produtos) {
     const action = this.actionSheet.create({
+      mode: 'ios',
       header: 'Selecione uma opção',
       buttons: [
         {
-          text: 'Marcar',
+          text: item.status ? 'Desmarcar' : 'Marcar', // if ternário, feito em uma única linha
+          icon: item.status ? 'radio-button-off' : 'checkmark-circle',
           handler: () => {
-            this.utilidades.toastando('Marcamos', "middle", "primary", 2000);
-            console.log(item.id)
-           },
+            item.status = !item.status;
+            this.DataBase.statusItem(item);
+          }
         },
-        
-        {
-          text: 'Desmarcar',
-          handler: () => {
-            this.utilidades.toastando('Desmarcamos', "middle",  "primary", 2000);
-          },
-        },   
         {
           text: "Cancelar",
           handler: () => {
-            this.utilidades.toastando('Cancelamos', "middle","primary", 2000);
-          },
-        },
-      ]    
+            this.utilidades.toastando('Cancelamos', "middle", "primary", 2000);
+          }
+        }
+      ]
     }); (await action).present();
   }
 }
