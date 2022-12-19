@@ -11,44 +11,34 @@ import { ActionSheetController } from '@ionic/angular';
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
 })
+
 export class HomePage implements OnInit {
 
   produtosVariados: Produtos[] = [];
+
   constructor(
-
+    //Serviço de banco de dados
     private DataBase: BancoServiceService,
-
-    //loadingController - Ferramento do carregando
-    //private loadCtrl: LoadingController,
-
     //alertController - Ferramenta que cria um alert
     private alertCtrl: AlertController,
-
-    //toastController - Criar uma mensagem
-    //private toast: ToastController,
-
+    //Serviço de utilidades
     private utilidades: UtilityService,
-
+    //ActionSheet
     private actionSheet: ActionSheetController
-
-
   ) { }
 
 
   ngOnInit() {
     //Carrega o método no inicio da página
     this.utilidades.carregando('carregando')
-    //this.http.get<Produtos[]>().subscribe(results => this.produtosVariados = results)
     this.DataBase.getItem().subscribe(results => this.produtosVariados = results)
   }
 
   //Método do alertando
-
   async alertando() {
     const alert = this.alertCtrl.create({
       mode: 'ios', // mostra com o formato ios
       header: 'Cadastro de produtos',
-
       inputs: [
         {
           name: 'item',
@@ -61,6 +51,7 @@ export class HomePage implements OnInit {
           placeholder: 'Informe a Quantidade'
         }
       ],
+
       buttons: [
         //botão de cancelar
         {
@@ -78,15 +69,23 @@ export class HomePage implements OnInit {
             let item = {
               produtos: form.item,
               quantidade: form.qtd,
+
               //vai ser a variavel de controle do ngIf
               status: false
 
             };
-            this.DataBase.postItem(item);
+            //this.DataBase.postItem(item);
             //console.log(item);
-            this.utilidades.toastando("Item Cadastrado", "middle", "success", 2000);
-          }
+            //this.utilidades.toastando("Item Cadastrado", "middle", "success", 2000);
+            try {
+              this.DataBase.postItem(item);
+            } catch (err) {
+              console.log(err)
+            } finally {
+              this.utilidades.toastando("Item Cadastrado", "middle", "success", 2000);
+            }
 
+          }
         }
       ]
     });
@@ -98,15 +97,16 @@ export class HomePage implements OnInit {
 
   //Método do botão excluir
   deletar(id: number) {
-    this.DataBase.deleteItem(id);
-
-    //Chama a mensagem
-    this.utilidades.toastando("Item Excluido", "middle", "danger", 2000);
-
-
-    //atualiza a página
-
+    try {
+      this.DataBase.deleteItem(id);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      //Chama a mensagem
+      this.utilidades.toastando("Item Excluido", "middle", "danger", 2000);
+    }
   }
+
   // método do actionsheet
   async actionMetod(item: Produtos) {
     const action = this.actionSheet.create({
@@ -116,6 +116,7 @@ export class HomePage implements OnInit {
         {
           text: item.status ? 'Desmarcar' : 'Marcar', // if ternário, feito em uma única linha
           icon: item.status ? 'radio-button-off' : 'checkmark-circle',
+          
           handler: () => {
             item.status = !item.status;
             this.DataBase.statusItem(item);

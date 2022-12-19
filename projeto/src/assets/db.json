@@ -1,22 +1,10 @@
 {
   "produtos": [
     {
-      "produtos": "Alcatra",
-      "quantidade": "3kg",
-      "status": true,
-      "id": 17
-    },
-    {
       "produtos": "Heiniken",
       "quantidade": "30cx",
       "status": false,
       "id": 18
-    },
-    {
-      "produtos": "Amstel",
-      "quantidade": "20cx",
-      "status": false,
-      "id": 19
     },
     {
       "produtos": "Picanha ",
